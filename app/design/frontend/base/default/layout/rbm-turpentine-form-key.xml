@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="0.1.0">                                                  
+    <default>  
+        <reference name="before_body_end">
+            <block type="core/template" name="update-formkey" template="rbm/turpentine-fom-key/update.phtml"/>            
+            <action method="setEsiOptions">
+                <params>
+                    <method>esi</method>
+                    <access>private</access>
+                    <scope>global</scope>
+                    <ttl>150</ttl>
+                    <flush_events>
+                        <checkout_cart_add/>
+                        <checkout_cart_addgroup/>
+                        <checkout_cart_updatepost/>
+                        <review_product_post/>
+                        <sendfriend_product_sendmail/>
+                        <wishlist_index_add/>
+                        <wishlist_index_update/>
+                        <wishlist_index_cart/>
+                        <wishlist_index_send/>
+                        <catalog_product_compare_add/> 
+                        <customer_login/>
+                    </flush_events>
+                </params>
+            </action>
+        </reference>
+    </default>
+</layout>
