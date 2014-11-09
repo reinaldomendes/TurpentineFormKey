@@ -8,7 +8,7 @@
                     <method>esi</method>
                     <access>private</access>
                     <scope>global</scope>
-                    <ttl>150</ttl>
+                    <ttl>0</ttl><!-- I'm not shure that is necessary, but I think that I don't mapped all flush events -->
                     <flush_events>
                         <checkout_cart_add/>
                         <checkout_cart_addgroup/>
