@@ -6,22 +6,33 @@ $key = Mage::getSingleton('core/session')->getFormKey();
 ?>
 <script type="text/javascript">
     (function(){
-        var ary = ['onclick','href','action'];
-        var formKey = '<?php echo $key;?>';
-        //formkey on urls
-        for(var i = 0 ; i < ary.length; i ++){
-            var attr =  ary[i];
-            $$('*['+ attr +'*="form_key"]').each(function(obj){
-                var value = $(obj).getAttribute(attr);                
-                value = value.replace(/\/form_key\/[^\/&]+/,'/form_key/' + formKey + '/rbm-turpentine-formkey/1');
-                $(obj).setAttribute(attr, value);
-            });
-        }
-        $$('input[name="form_key"]').each(function(input){
-           $(input).setValue(formKey);
-           var elm = new Element('input',{'type':'hidden','name':'rbm-turpentine-formkey','value':1});
-           $(input).insert({'after' : elm});
+        var fn = function(){
+            var ary = ['onclick','href','action'];
+            var formKey = '<?php echo $key; ?>';
+            //formkey on urls
+            for(var i = 0 ; i < ary.length; i ++){
+                var attr =  ary[i];                
+                $$('*['+ attr +'*="form_key"]').each(function(obj){                    
+                    var value = $(obj).getAttribute(attr);                
+                    if(value.indexOf('rbm-turpentine-formkey') == -1){
+                        value = value.replace(/\/form_key\/[^\/&]+/,'/form_key/' + formKey + '/rbm-turpentine-formkey/1');
+                        $(obj).setAttribute(attr, value);
+                    }
+                });
+            }
+            $$('input[name="form_key"]').each(function(input){
+                $(input).setValue(formKey);
+                var hasKey = $(input).up('form').select('[name="rbm-turpentine-formkey"]').length
+                if(!hasKey){
+                    var elm = new Element('input',{'type':'hidden','name':'rbm-turpentine-formkey','value':1});
+                    $(input).insert({'after' : elm});
+                }
+            });        
+        };
+        var _interval = setInterval(fn,100);
+        $(document).observe('dom:loaded',function(){
+            fn();
+            clearInterval(_interval);
         });
-        
     })();
 </script>
